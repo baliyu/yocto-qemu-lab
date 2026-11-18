@@ -1,0 +1,43 @@
+{
+  "calibration": [
+    {
+      "bucket": "0-40",
+      "hit_rate": 0.0,
+      "mean_chance": 30.0,
+      "n": 2
+    },
+    {
+      "bucket": "41-60",
+      "hit_rate": 52.6,
+      "mean_chance": 57.4,
+      "n": 19
+    },
+    {
+      "bucket": "61-75",
+      "hit_rate": 71.4,
+      "mean_chance": 70.5,
+      "n": 42
+    },
+    {
+      "bucket": "76-85",
+      "hit_rate": 79.4,
+      "mean_chance": 81.9,
+      "n": 34
+    },
+    {
+      "bucket": "86-100",
+      "hit_rate": 100.0,
+      "mean_chance": 93.0,
+      "n": 5
+    }
+  ],
+  "totals": {
+    "hit_rate_percent": 70.8,
+    "hits": 75,
+    "mean_stated_chance": 72.2,
+    "misses": 31,
+    "not_scored": 7,
+    "rows": 113,
+    "scored_with_chance": 102
+  }
+}

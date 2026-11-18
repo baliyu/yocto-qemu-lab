@@ -1,0 +1,5 @@
+# Added to build/conf/local.conf (AI-assisted setup, checked by the author)
+BB_NUMBER_THREADS = "6"
+PARALLEL_MAKE = "-j 6"
+# Lab image only: root login without a password, for QEMU tests. Never use on a real device.
+EXTRA_IMAGE_FEATURES += "empty-root-password allow-empty-password allow-root-login"

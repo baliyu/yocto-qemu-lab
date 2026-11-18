@@ -1,0 +1,114 @@
+id,phase,statement,chance,outcome,note
+P63,restart check,Build finishes within 4 hours of its start,,miss,Killed by a laptop update at 04:58 at task 3875 of 4349; finished only at 15:42 after fixes
+P88,step 94 check,Log written within the last 10 minutes,,hit,
+P89,step 94 check,Busiest process uses 100% CPU or more,,hit,
+P90,step 94 check,Load average is 4 or higher,,hit,
+P91,step 94 check,Counter between 2100 and 2700 at the 01:15 reading,65,not_scored,Laptop restarted before that reading
+P92,step 94 check,ERROR lines still 0 at the 01:15 reading,80,not_scored,Laptop restarted before that reading
+P93,step 94 check,Swap used under 2 GB at the 01:15 reading,85,not_scored,Laptop restarted before that reading
+P94,restart check,No bitbake process is running,95,hit,
+P95,restart check,The build did not finish,75,hit,
+P96,restart check,Last task counter above 2500,70,hit,
+P97,restart check,ERROR lines 0,85,hit,
+P98,first resume,First task line within 10 minutes,85,hit,
+P99,first resume,New total below 1000,65,miss,Total stayed 4349 because the counter also counts finished tasks
+P100,first resume,Build finishes cleanly within 90 minutes,70,miss,Failed in gcc do_compile because of zero-byte objects from the kill
+X1,10:46 reading,Counter above 3300 (unnumbered in chat),65,hit,
+X2,10:46 reading,ERROR lines 0 (unnumbered in chat),85,hit,
+X3,10:46 reading,Swap used under 2 GB (unnumbered in chat),80,hit,
+P101,gcc failure,A summary line is present,65,hit,
+P102,gcc failure,0 failed tasks,85,miss,1 task failed: gcc do_compile
+P103,gcc failure,Image file exists,65,not_scored,Not checked in that reading
+P104,gcc failure read,One recipe do_compile or do_install failed,70,hit,
+P105,gcc failure read,Cause visible in the last 40 log lines,75,hit,
+P106,gcc failure read,Failure not related to the restart,80,miss,Six zero-byte object files written at the restart minute
+P107,gcc object check,gimple-pretty-print.o exists but is empty or wrong,60,hit,
+P108,gcc object check,At least one .o under 2 KB,60,hit,
+P109,gcc object check,A clean of the gcc work folder fixes it,75,not_scored,Replaced by a faster fix before it was tried
+P110,gcc fix run,Check finds between 6 and 20 bad objects,70,hit,
+P111,gcc fix run,The resumed build gets past gcc do_compile,80,hit,Scored later from the finished build
+P112,gcc fix run,Build finishes with no failed tasks within 60 minutes,60,miss,Finished 15:42 (2 h 42 min after the restart) after a long native clang compile
+P113,resume 2 readings,A Tasks Summary line present and build not running,70,miss,Still running at 13:41; native clang compile took until about 14:59
+P114,resume 2 readings,ERROR lines 0,75,hit,
+P115,resume 2 readings,A core-image-minimal ext4 image is listed,65,miss,No image yet at 13:41
+P116,liveness,Log written to in the last 5 minutes,85,hit,
+P117,liveness,Busiest process is a compiler,65,hit,
+P118,liveness,Load average above 4,80,hit,
+P119,clang compile,Ninja counter shows in the clang log,80,hit,
+P120,clang compile,Counter between 30% and 90% of the total,60,hit,
+P121,clang compile,Total between 3000 and 8000,60,miss,Total was 2282
+P122,build finished check,The build has finished,65,hit,
+P123,build finished check,A Tasks Summary line is present,60,hit,
+P124,build finished check,ERROR lines 0,65,hit,
+P125,build finished check,An ext4 image is listed,55,hit,
+P126,boot test 1,The log reaches a login prompt,75,miss,runqemu failed before booting because the fragment refuses a MACHINE assignment
+P127,boot test 1,/dev/kvm does not exist,55,miss,/dev/kvm exists in this WSL
+P128,boot test 1,uname reports a 6.18 kernel,80,miss,No boot and no output
+P129,boot test 1,Scripted root login works,70,miss,No boot
+P130,boot log read,A readable bitbake error above the traceback,70,hit,
+P131,boot log read,bitbake -e run by hand also fails,55,miss,It exits 0
+P132,boot log read,If it fails the message mentions MACHINE,50,not_scored,Condition not met because the manual run did not fail
+P133,boot test 2,QEMU starts without a bitbake error,80,miss,No bitbake error but runqemu refused the compressed image
+P134,boot test 2,The log reaches a login prompt,70,miss,Not started
+P135,boot test 2,uname reports a 6.18 kernel,80,miss,Not started
+P136,boot test 2,Scripted root login works,70,miss,Not started
+P137,boot test 3,QEMU starts and the log is above 5 KB,80,hit,
+P138,boot test 3,The log reaches a login prompt,75,hit,
+P139,boot test 3,uname reports a 6.18 kernel,80,miss,Root login was refused so uname never ran
+P140,boot test 3,Scripted root login works,70,miss,Login incorrect because the image had no empty root password
+P141,boot log read 2,The log contains Login incorrect,70,hit,
+P142,boot log read 2,No kernel panic and no failed service,80,hit,
+P143,boot log read 2,The kernel line shows 6.18,80,hit,
+P144,root login rebuild,The dry run exits 0,75,hit,
+P145,root login rebuild,The image rebuild finishes within 15 minutes,70,hit,Took about 3 minutes
+P146,boot test 4,Root logs in with no password,75,hit,
+P147,boot test 4,uname shows 6.18.59-yocto-standard,85,hit,
+P148,boot test 4,poweroff ends QEMU before the limit,70,hit,
+P149,SBOM look,At least one .spdx.json in the deploy folder,85,hit,
+P150,SBOM look,A CVE report file already exists,30,miss,No CVE report existed before the fragment was enabled
+P151,SBOM look,INHERIT does not mention sbom-cve-check,70,hit,
+P152,sbom-cve-check class,The class header explains how to enable it,60,miss,Headers describe scope and not how to enable it
+P153,sbom-cve-check class,A SBOM_CVE_CHECK variable appears,80,hit,
+P154,sbom-cve-check class,It needs a database download at build time,55,hit,Inferred from recipe names then confirmed by a 9 GB fetch
+P155,fragment read,The fragment sets INHERIT to sbom-cve-check,60,miss,It adds the class to IMAGE_CLASSES instead
+P156,fragment read,The fragment list shows it as not enabled,80,not_scored,My filter hid the section headers
+P157,fragment read,The fragment file is under 15 lines,75,miss,18 lines
+P158,enable fragment,enable-fragment exits 0,80,hit,
+P159,enable fragment,The dry run exits 0,80,hit,
+P160,enable fragment,The rebuild reruns more than 100 tasks,65,hit,924 tasks reran
+P161,enable fragment,The rebuild finishes within 60 minutes,55,miss,About 78 minutes because of two 4.5 GB database fetches
+P162,enable fragment,A .sbom-cve-check.yocto.json file appears,75,hit,
+P163,database fetch,Database tasks appear in the log,80,hit,
+P164,database fetch,ERROR lines 0,70,hit,
+P165,database fetch,A Tasks Summary line is present,55,hit,
+P166,database fetch,A .sbom-cve-check.yocto.json file is listed,55,hit,
+P167,database fetch,A .cve.txt file is listed,30,miss,Only the two default exports were written
+P168,database fetch,The active-task list names an sbom-cve-check task,75,hit,
+P169,database fetch,The busiest process is a python3,55,miss,Two git processes were busiest
+P170,database fetch,The log was written within the last 5 minutes,80,miss,Last written 9 minutes earlier
+P171,database fetch,Both database folders are found,80,hit,
+P172,database fetch,The folders grew by more than 20 MB in 60 seconds,65,hit,
+P173,database fetch,Each folder is under 5 GB,75,hit,
+P174,manifest look,The manifest has a package list,70,hit,
+P175,manifest look,Between 50 and 400 packages,70,miss,36 packages
+P176,manifest look,At least one Unpatched issue,70,hit,
+P177,manifest look,Warnings are mostly about missing CVE or licence data,50,miss,Warnings were unpatched-CVE findings
+P178,repo setup,The repo folder does not exist yet,85,hit,
+P179,repo setup,pip install exits 0,90,hit,
+P180,repo setup,The venv Python is 3.12,85,hit,
+P181,analysis script,pytest reports 4 passed,85,hit,
+P182,analysis script,Totals are 22246 and 145 and 112,95,hit,
+P183,analysis script,36 packages and 10 with Unpatched issues,80,hit,
+P184,analysis script,linux-yocto has the most Unpatched issues,60,hit,116 of 145
+P185,figure script,pytest reports 6 passed,85,hit,
+P186,figure script,The PNG is between 20 KB and 200 KB,75,hit,
+P187,figure script,The script plots 10 packages,80,hit,
+P188,SBOM look 2,mcuboot-lab holds an SBOM file,80,hit,
+P189,SBOM look 2,Between 30 and 600 software packages in the Yocto SBOM,60,hit,
+P190,SBOM look 2,The Yocto SPDX 3 file has an @graph list,70,hit,
+P191,mcuboot SBOM,The MCUboot SBOM lists 3 packages,75,miss,5 entries: 2 image entries and 3 components
+P192,mcuboot SBOM,It is SPDX 2.x tag-value,70,hit,
+P193,mcuboot SBOM,triage.csv has 7 data rows,85,hit,
+P194,counts script,pytest reports 10 passed,85,hit,
+P195,counts script,Yocto counts are 257 packages and 37122 files,95,hit,
+P196,counts script,MCUboot counts are 5 packages and 7 relationships,90,hit,

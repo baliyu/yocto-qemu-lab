@@ -1,0 +1,22 @@
+{
+  "mcuboot_lab": {
+    "bytes": 2511,
+    "file": "mcuboot-lab.spdx",
+    "files": 0,
+    "format": "SPDX-2.3 tag-value",
+    "packages": 5,
+    "relationships": 7,
+    "sha256": "6b8a616e8ee59e5ba5f4db6483c495a5f2a093ae06d6250d582aa36fc4999983",
+    "vulnerability_elements": 0
+  },
+  "yocto": {
+    "bytes": 46786519,
+    "elements": 75669,
+    "file": "core-image-minimal-qemux86-64.rootfs-20261118173511.spdx.json",
+    "files": 37122,
+    "format": "SPDX 3.x JSON",
+    "packages": 257,
+    "sha256": "7dc903b27aca75ed2be695ee53ff6d526d05aa83b6ec07d8fac67a37c32f0bf4",
+    "vulnerability_elements": 292
+  }
+}

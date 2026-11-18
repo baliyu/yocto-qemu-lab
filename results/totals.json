@@ -1,0 +1,11 @@
+{
+  "ignored": 112,
+  "manifest_bytes": 33783686,
+  "manifest_file": "core-image-minimal-qemux86-64.rootfs-20261118173511.sbom-cve-check.yocto.json",
+  "manifest_sha256": "36567152622daf2d94416f982f14ed8249886f74f26bc3945fa9f51d024cc705",
+  "other": 0,
+  "packages": 36,
+  "packages_with_unpatched": 10,
+  "patched": 22246,
+  "unpatched": 145
+}
