@@ -112,3 +112,26 @@ P193,mcuboot SBOM,triage.csv has 7 data rows,85,hit,
 P194,counts script,pytest reports 10 passed,85,hit,
 P195,counts script,Yocto counts are 257 packages and 37122 files,95,hit,
 P196,counts script,MCUboot counts are 5 packages and 7 relationships,90,hit,
+P200,scorecard,pytest reports 15 passed,,hit,statement rebuilt from the later score and chance not recorded
+P203,scorecard,pytest reports 16 passed after the patch,,hit,statement rebuilt from the later score and chance not recorded
+P204,scorecard,the hit rate in the script output is 70.8 percent,,hit,statement rebuilt from the later score and chance not recorded
+P205,scorecard,the mean stated chance in the script output is 72.2 percent,,hit,statement rebuilt from the later score and chance not recorded
+P206,repo,all 7 files found in Downloads under the exact names,65,hit,
+P207,repo,none of the 7 destinations exists yet,95,hit,
+P208,repo,em dash count is 0 in every file,95,hit,
+P209,repo,pytest reports 16 passed,90,hit,
+P210,repo,exactly 20 packages have any match in packages.csv,40,hit,README figure confirmed
+P211,repo,an older image SBOM of about 2.3 MB still exists in the build folder,25,not_scored,file list was cut at 8 lines and showed no image level SBOM
+P212,repo,no file in the repo contains an em dash,95,miss,a gitignored pyc file held one from the escape in scorecard.py and no committed file had one
+P213,repo,README bullet found once and removed with em dashes still 0,95,hit,
+P214,repo,log times match the SETUP timeline rows,25,miss,boot start was 17:08 not 17:05 and the root login rebuild row was missing and about 3 minutes was wrong
+P215,repo,all 6 SETUP.md anchors found exactly once,90,hit,
+P216,repo,pytest reports 16 passed,95,hit,
+P217,repo,the first commit is created,85,hit,
+P218,push,working tree clean on main,90,hit,inferred because the push block only continues when clean
+P219,push,remote check succeeds and shows an empty repo,70,hit,inferred because the push block only continues when the remote is empty
+P220,push,first push succeeds,65,hit,
+P221,repo,all 3 README anchors found once,90,hit,
+P222,repo,second commit is created,90,hit,
+P223,push,second push succeeds with 1 ahead and 0 behind,90,hit,
+P224,push,Actions run 2 completes successfully,85,hit,confirmed from the pasted Actions page
