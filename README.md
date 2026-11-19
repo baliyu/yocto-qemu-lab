@@ -10,7 +10,7 @@ Every number below comes from a script in `scripts/` run on the real files, and 
 
 | Area | Result | Where |
 |---|---|---|
-| The image | `core-image-minimal` for `qemux86-64` the resumed build finished with all 4,349 tasks attempted and all succeeded (after the failure described below); it boots in QEMU under KVM to a Poky 6.0.4 login prompt with a 6.18.59 kernel | docs/SETUP.md |
+| The image | `core-image-minimal` for `qemux86-64`. The resumed build finished with all 4,349 tasks attempted and all succeeded (after the failure described below). It boots in QEMU under KVM to a Poky 6.0.4 login prompt with a 6.18.59 kernel | docs/SETUP.md |
 | Yocto image SBOM | SPDX 3.x JSON, 46.8 MB: 257 packages, 37,122 files, 292 vulnerability elements | results/sbom_counts.json |
 | MCUboot SBOM (mine) | SPDX 2.3 tag-value, 2,511 bytes: 5 package entries (2 image entries and 3 components), 0 files, 7 relationships | results/sbom_counts.json |
 | CVE report | 36 packages scanned, 20 with database matches: 22,246 Patched, 145 Unpatched, 112 Ignored; 10 packages carry Unpatched matches, and `linux-yocto` holds 116 of the 145 | results/totals.json, results/packages.csv |
@@ -28,7 +28,7 @@ The build was killed by a laptop restart at task 3875 of 4349 and left six zero-
 
 - One image, one machine, one build, one day. The vulnerability databases were fetched on 18 November 2026 at their latest revision, so another day gives different counts.
 - "Unpatched" means a database match with no fix recorded. I have not triaged the 145, so none of them is a confirmed vulnerability. The kernel list includes very old entries, and the 22,246 "Patched" figure is a count of matched database entries, not a count of risks.
-- The scorecard was rebuilt from my record of the session, one row per stated prediction. Predictions made before the step-94 check are not in it, and some stated chances are blank because I did not have them. The predictions are not independent: several misses share one cause.
+- The scorecard was rebuilt from my record of the session, one row per stated prediction. Earlier predictions that are not in that record are missing from it, and some stated chances are blank because I did not have them. The predictions are not independent: several misses share one cause.
 - The image has an empty root password for QEMU testing. It is a lab image and must never go on a real device.
 - Not done: running the image on real hardware, and reasoning about which kernel CVEs apply to this kernel configuration.
 
