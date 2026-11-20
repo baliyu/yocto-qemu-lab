@@ -1,0 +1,20 @@
+{
+  "by_package": {
+    "acl": 2,
+    "attr": 1,
+    "busybox": 4,
+    "glibc": 5,
+    "openssl": 12,
+    "tar": 2,
+    "util-linux": 1,
+    "util-linux-libuuid": 1,
+    "zlib": 1
+  },
+  "by_status": {
+    "affected": 4,
+    "not_affected": 20,
+    "unknown": 5
+  },
+  "kernel_unpatched_not_triaged": 116,
+  "userland_rows": 29
+}
