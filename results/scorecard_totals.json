@@ -20,24 +20,24 @@
     },
     {
       "bucket": "76-85",
-      "hit_rate": 83.3,
-      "mean_chance": 82.4,
-      "n": 54
+      "hit_rate": 83.6,
+      "mean_chance": 82.5,
+      "n": 55
     },
     {
       "bucket": "86-100",
-      "hit_rate": 95.1,
-      "mean_chance": 94.0,
-      "n": 61
+      "hit_rate": 95.4,
+      "mean_chance": 93.8,
+      "n": 65
     }
   ],
   "totals": {
-    "hit_rate_percent": 80.5,
-    "hits": 186,
-    "mean_stated_chance": 75.2,
+    "hit_rate_percent": 80.9,
+    "hits": 191,
+    "mean_stated_chance": 75.5,
     "misses": 45,
     "not_scored": 11,
-    "rows": 242,
-    "scored_with_chance": 223
+    "rows": 247,
+    "scored_with_chance": 228
   }
 }

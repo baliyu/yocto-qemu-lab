@@ -15,7 +15,7 @@ Every number below comes from a script in `scripts/` run on the real files, and 
 | MCUboot SBOM (mine) | SPDX 2.3 tag-value, 2,511 bytes: 5 package entries (2 image entries and 3 components), 0 files, 7 relationships | results/sbom_counts.json |
 | CVE report | 36 packages scanned, 20 with database matches: 22,246 Patched, 145 Unpatched, 112 Ignored; 10 packages carry Unpatched matches, and `linux-yocto` holds 116 of the 145 | results/totals.json, results/packages.csv |
 | CVE triage | All 145 Unpatched matches have a status and a reason. The 29 userland rows: 4 affected, 20 not affected, 5 unknown. The 116 kernel rows, from the CVE records' version ranges and the kernel build: 69 affected, 20 not affected, 27 unknown | docs/TRIAGE.md, docs/triage_userland.csv, docs/triage_kernel.csv, results/triage_totals.json |
-| My predictions | 242 rows: 186 hit, 45 missed, 11 not scored; 80.5% of scored predictions came true against a mean stated chance of 75.2% (223 rows with a stated chance) | results/scorecard_totals.json |
+| My predictions | 247 rows: 191 hit, 45 missed, 11 not scored; 80.9% of scored predictions came true against a mean stated chance of 75.5% (228 rows with a stated chance) | results/scorecard_totals.json |
 
 Figures: `results/fig_unpatched_by_package.png`, `results/fig_sbom_scale.png`, `results/fig_calibration.png`.
 

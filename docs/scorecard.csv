@@ -241,3 +241,8 @@ P327,kernel triage,the checker patch matches the file and the suite passes with 
 P328,kernel triage,"totals show 116 kernel rows as 69, 20 and 27 with none left untriaged",92,hit,
 P329,kernel triage,triage_check.py hard-codes the 29 userland count,80,miss,"It derives the expected counts from packages.csv and skips linux-yocto. Only the kernel check was missing, not a fixed 29."
 P330,kernel triage,the checker totals are one flat set of counts with no kernel split,65,hit,
+P331,kernel commit and push,the scorecard loads and the suite passes with 42 tests,90,hit,
+P332,kernel commit and push,"totals read 242 rows, 186 hit and 45 missed",90,hit,
+P333,kernel commit and push,the commit succeeds and only the expected files change,93,hit,
+P334,kernel commit and push,the push guard passes and the push succeeds,95,hit,
+P335,kernel commit and push,CI on 700cda1 goes green,85,hit,
