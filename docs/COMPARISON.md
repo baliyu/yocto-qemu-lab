@@ -12,13 +12,13 @@ Built with AI assistance (Claude); checked by the author. Counts come from `resu
 | Vulnerability data inside the file | none | 292 vulnerability elements with VEX status |
 | Version pinning | components pinned to a commit hash | recipe versions |
 | How findings are produced | my checker asks OSV about the commit of each component | `sbom-cve-check` 1.3.5 matches package names and versions against NVD and the CVE List, fetched at build time |
-| What I did with the findings | 7 advisories triaged with a reason each (`docs/triage.csv` in mcuboot-lab) | 29 of the 145 Unpatched matches triaged with a reason each (`docs/triage_userland.csv`); the 116 kernel matches are untriaged |
+| What I did with the findings | 7 advisories triaged with a reason each (`docs/triage.csv` in mcuboot-lab) | All 145 Unpatched matches triaged with a reason each (`docs/triage_userland.csv` for the 29 userland rows, `docs/triage_kernel.csv` for the 116 kernel rows) |
 
 ## What this shows
 
 1. **Scale.** My SBOM lists the 3 components that compile code in a build whose manifest names 66 modules. The Yocto SBOM lists 257 packages, which includes build tools that never reach the image, and 37,122 source files. The CVE manifest covers 36 packages.
 2. **The vulnerability numbers cannot be compared.** 7 triaged advisories and 145 matches (29 triaged, 116 not) come from different methods: commit lookups against OSV, and package-version matching against NVD and the CVE List. 7 against 145 says nothing about which build is safer.
-3. **Gaps on each side.** My SBOM has no files and no licence data. The Yocto result is triaged only for the 29 non-kernel matches. The 116 kernel matches are the missing step.
+3. **Gaps on each side.** My SBOM has no files and no licence data. The Yocto triage covers all 145 matches, but the 116 kernel statuses rest on version ranges and build files, and 27 of them stay unknown.
 
 ## Limits
 

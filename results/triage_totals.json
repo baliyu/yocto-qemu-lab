@@ -15,6 +15,12 @@
     "not_affected": 20,
     "unknown": 5
   },
-  "kernel_unpatched_not_triaged": 116,
+  "kernel_by_status": {
+    "affected": 69,
+    "not_affected": 20,
+    "unknown": 27
+  },
+  "kernel_rows": 116,
+  "kernel_unpatched_not_triaged": 0,
   "userland_rows": 29
 }

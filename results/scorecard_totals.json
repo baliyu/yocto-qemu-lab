@@ -14,30 +14,30 @@
     },
     {
       "bucket": "61-75",
-      "hit_rate": 74.6,
+      "hit_rate": 76.2,
       "mean_chance": 70.2,
-      "n": 59
+      "n": 63
     },
     {
       "bucket": "76-85",
-      "hit_rate": 84.0,
+      "hit_rate": 83.3,
       "mean_chance": 82.4,
-      "n": 50
+      "n": 54
     },
     {
       "bucket": "86-100",
-      "hit_rate": 96.5,
-      "mean_chance": 94.1,
-      "n": 57
+      "hit_rate": 95.1,
+      "mean_chance": 94.0,
+      "n": 61
     }
   ],
   "totals": {
-    "hit_rate_percent": 80.4,
-    "hits": 176,
-    "mean_stated_chance": 74.8,
-    "misses": 43,
+    "hit_rate_percent": 80.5,
+    "hits": 186,
+    "mean_stated_chance": 75.2,
+    "misses": 45,
     "not_scored": 11,
-    "rows": 230,
-    "scored_with_chance": 211
+    "rows": 242,
+    "scored_with_chance": 223
   }
 }

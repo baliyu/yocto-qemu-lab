@@ -79,3 +79,39 @@ def test_main_fails_on_count_mismatch(tmp_path):
     pk = tmp_path / "p.csv"
     pk.write_text("name,version,patched,unpatched,ignored,other\na,1,0,2,0,0\n")
     assert t.main(["x", tri, str(pk), str(tmp_path / "out")]) == 1
+
+
+KPK = "name,version,patched,unpatched,ignored,other\nlinux-yocto,1,0,3,0,0\na,1,0,1,0,0\n"
+
+
+def _kernel_rows(n=3, pkg=None):
+    sts = ["affected", "unknown", "not_affected"]
+    return [row(pkg=pkg or t.KERNEL, cid="K%d" % i, status=sts[i % 3]) for i in range(n)]
+
+
+def test_main_with_kernel_rows(tmp_path):
+    import json
+    tri = write(tmp_path, [row(status="affected")])
+    kern = write(tmp_path, _kernel_rows(), name="k.csv")
+    pk = tmp_path / "p.csv"
+    pk.write_text(KPK)
+    assert t.main(["x", tri, str(pk), str(tmp_path / "out"), kern]) == 0
+    s = json.loads((tmp_path / "out" / "triage_totals.json").read_text())
+    assert s["kernel_rows"] == 3 and s["kernel_unpatched_not_triaged"] == 0
+    assert s["kernel_by_status"] == {"affected": 1, "not_affected": 1, "unknown": 1}
+
+
+def test_kernel_row_count_mismatch_fails(tmp_path):
+    tri = write(tmp_path, [row(status="affected")])
+    kern = write(tmp_path, _kernel_rows(2), name="k.csv")
+    pk = tmp_path / "p.csv"
+    pk.write_text(KPK)
+    assert t.main(["x", tri, str(pk), str(tmp_path / "out"), kern]) == 1
+
+
+def test_kernel_file_with_another_package_fails(tmp_path):
+    tri = write(tmp_path, [row(status="affected")])
+    kern = write(tmp_path, _kernel_rows(3, pkg="zlib"), name="k.csv")
+    pk = tmp_path / "p.csv"
+    pk.write_text(KPK)
+    assert t.main(["x", tri, str(pk), str(tmp_path / "out"), kern]) == 1

@@ -1,6 +1,6 @@
-# Userland CVE triage
+# CVE triage
 
-The CVE report had 145 Unpatched matches. 116 are in `linux-yocto` and 29 are in nine other packages. This page covers the 29, which I triaged the way I triaged 7 advisories in mcuboot-lab: one status and one reason per row. The record is `docs/triage_userland.csv`. The kernel matches are not triaged.
+The CVE report had 145 Unpatched matches. 116 are in `linux-yocto` and 29 are in nine other packages. I triaged all of them the way I triaged 7 advisories in mcuboot-lab: one status and one reason per row. The userland record is `docs/triage_userland.csv` and the kernel record is `docs/triage_kernel.csv`. The sections down to the results table cover the 29 userland rows, and the kernel rows have their own section after it.
 
 ## Statuses
 
@@ -31,13 +31,44 @@ The CVE report had 145 Unpatched matches. 116 are in `linux-yocto` and 29 are in
 
 Total: 4 affected, 20 not affected, 5 unknown (`results/triage_totals.json`).
 
+## Kernel matches
+
+The 116 `linux-yocto` rows rest on a different kind of evidence, because the kernel is one package built from one configuration. `scripts/triage_kernel.py` reads each CVE record from the cvelist database, which lists the affected kernel versions and the source files the fix touched. It checks 6.18.59 against the ranges, then checks the build of this kernel: is each source file compiled, and is it built in or a module. The record is `docs/triage_kernel.csv`. The rules, in order:
+
+1. The record has no version ranges: `unknown`.
+2. A range in the record lists 6.18.59 as unaffected (the flaw came later): `not_affected`. No row was settled this way. Every match that has a range is inside it.
+3. Every named file is Rust or another architecture: `not_affected`.
+4. The code is a module that is not in the image: `not_affected`. The root filesystem holds one module, `uvesafb.ko`.
+5. The source file exists but has no object file in the build: `not_affected`.
+6. The code is built into the kernel: `affected`. For device drivers (NVMe, USB, ACPI, framebuffer, serial, virtio net, CPU counters) it is `unknown`, because I did not check that this QEMU machine has the device.
+7. The named file is not in the 6.18.59 source, or only headers are named: `unknown`.
+
+For the kernel, `affected` means the version range includes 6.18.59 and the code is built into this kernel (or is a module that is in the image). It does not mean any program can reach it.
+
+| What decided it | Rows | Status |
+|---|---|---|
+| Core code built into the kernel | 69 | affected |
+| Module that is not in the image | 16 | not affected |
+| Source file not compiled (EROFS, sched_ext) | 2 | not affected |
+| Rust code, `CONFIG_RUST` absent | 1 | not affected |
+| Code for another architecture | 1 | not affected |
+| Device driver built in, hardware not checked | 12 | unknown |
+| The record has no version ranges (old entries) | 13 | unknown |
+| File not in the 6.18.59 source | 1 | unknown |
+| Header files only | 1 | unknown |
+
+Total: 69 affected, 20 not affected, 27 unknown (`results/triage_totals.json`). `scripts/triage_check.py` checks this file the same way as the userland one and compares the row count with the 116 in `results/packages.csv`.
+
 ## What I did not check
 
 - Programs that load libraries at run time with `dlopen`. The import scan sees only static imports.
 - Files outside `bin`, `sbin`, `lib`, `usr/bin`, `usr/sbin`, `usr/lib` and `usr/libexec`.
 - Upstream patches and backports. glibc 2.43+git is a stable-branch snapshot and busybox 1.37.0 is older than the version NVD names, so version matching alone can mislead in both directions.
 - Behaviour inside the running QEMU image.
-- The 116 kernel matches.
+- Kernel rows: whether the code marked `affected` can be reached from a running program, the kernel command line, or the devices this image has. The 69 is a count of built-in matches, many of them for features this small image never uses. It is not a count of risks.
+- Kernel rows: backports. The version ranges are what each CVE record says, and a fix applied by a stable release that the record does not list is not seen.
+- Kernel rows: the 12 device-driver rows, the 13 with no version data, and the 2 others left `unknown`.
+- Kernel build evidence is one build: the object files and `built-in.a` lists in this build directory, and the one module in the root filesystem.
 
 One image, one build, one day. This is not a security assessment, and nothing was run on real hardware.
 

@@ -14,8 +14,8 @@ Every number below comes from a script in `scripts/` run on the real files, and 
 | Yocto image SBOM | SPDX 3.x JSON, 46.8 MB: 257 packages, 37,122 files, 292 vulnerability elements | results/sbom_counts.json |
 | MCUboot SBOM (mine) | SPDX 2.3 tag-value, 2,511 bytes: 5 package entries (2 image entries and 3 components), 0 files, 7 relationships | results/sbom_counts.json |
 | CVE report | 36 packages scanned, 20 with database matches: 22,246 Patched, 145 Unpatched, 112 Ignored; 10 packages carry Unpatched matches, and `linux-yocto` holds 116 of the 145 | results/totals.json, results/packages.csv |
-| Userland triage | The 29 non-kernel Unpatched matches in 9 packages are triaged with a reason each: 4 affected, 20 not affected, 5 unknown. The 116 kernel matches are not triaged | docs/TRIAGE.md, docs/triage_userland.csv, results/triage_totals.json |
-| My predictions | 230 rows: 176 hit, 43 missed, 11 not scored; 80.4% of scored predictions came true against a mean stated chance of 74.8% (211 rows with a stated chance) | results/scorecard_totals.json |
+| CVE triage | All 145 Unpatched matches have a status and a reason. The 29 userland rows: 4 affected, 20 not affected, 5 unknown. The 116 kernel rows, from the CVE records' version ranges and the kernel build: 69 affected, 20 not affected, 27 unknown | docs/TRIAGE.md, docs/triage_userland.csv, docs/triage_kernel.csv, results/triage_totals.json |
+| My predictions | 242 rows: 186 hit, 45 missed, 11 not scored; 80.5% of scored predictions came true against a mean stated chance of 75.2% (223 rows with a stated chance) | results/scorecard_totals.json |
 
 Figures: `results/fig_unpatched_by_package.png`, `results/fig_sbom_scale.png`, `results/fig_calibration.png`.
 
@@ -23,15 +23,15 @@ The two SBOMs are not like for like, and the comparison says why: [docs/COMPARIS
 
 ## What went wrong, and is kept
 
-The build was killed by a laptop restart at task 3875 of 4349 and left six zero-byte object files, which failed the final link of `gcc`. `runqemu` refused the setup's machine fragment, then the compressed image, and then the first root login. Each cause and fix is in [docs/SETUP.md](docs/SETUP.md). 43 of my predictions missed, and every miss has a note in [docs/scorecard.csv](docs/scorecard.csv).
+The build was killed by a laptop restart at task 3875 of 4349 and left six zero-byte object files, which failed the final link of `gcc`. `runqemu` refused the setup's machine fragment, then the compressed image, and then the first root login. Each cause and fix is in [docs/SETUP.md](docs/SETUP.md). 45 of my predictions missed, and every miss has a note in [docs/scorecard.csv](docs/scorecard.csv).
 
 ## Limits
 
 - One image, one machine, one build, one day. The vulnerability databases were fetched on 18 November 2026 at their latest revision, so another day gives different counts.
-- "Unpatched" means a database match with no fix recorded. I triaged the 29 non-kernel matches (docs/TRIAGE.md) and not the 116 kernel matches, so none of the 145 is a confirmed vulnerability. A "not affected" status means the vulnerable code is not reachable in this image, not that the library is fixed. The kernel list includes very old entries, and the 22,246 "Patched" figure is a count of matched database entries, not a count of risks.
-- The scorecard was rebuilt from my record of the session, one row per stated prediction. Earlier predictions that are not in that record are missing from it, including P197 to P199, P201 and P202, whose text I could not recover, and some stated chances are blank because I did not have them. The predictions are not independent: several misses share one cause.
+- "Unpatched" means a database match with no fix recorded. I gave all 145 a status (docs/TRIAGE.md), and none of them is a confirmed vulnerability: the kernel statuses rest on version ranges and on which files the build compiled, and "affected" does not mean exploitable. A "not affected" status means the vulnerable code is not reachable in this image, not that the library is fixed. The kernel list includes very old entries, and the 22,246 "Patched" figure is a count of matched database entries, not a count of risks.
+- The scorecard was rebuilt from my record of the session, one row per stated prediction. Earlier predictions that are not in that record are missing from it, including P197 to P199, P201 and P202, whose text I could not recover, and some stated chances are blank because I did not have them. The first part of the kernel triage (file layout, build location, manifest and CVE record parsing: 29 predictions by my tally, 22 hit, 6 missed and 1 not scored) is not in the file either, because I did not keep its text. The predictions are not independent: several misses share one cause.
 - The image has an empty root password for QEMU testing. It is a lab image and must never go on a real device.
-- Not done: running the image on real hardware, and reasoning about which kernel CVEs apply to this kernel configuration.
+- Not done: running the image on real hardware, and checking whether the kernel code marked affected can be reached in the running image. 27 kernel rows and 5 userland rows stay unknown.
 
 ## Reproduce
 
@@ -43,7 +43,8 @@ python scripts/analyze_manifest.py MANIFEST.sbom-cve-check.yocto.json results
 python scripts/make_figure.py results/packages.csv results/fig_unpatched_by_package.png
 python scripts/sbom_counts.py IMAGE.spdx.json mcuboot-lab.spdx results
 python scripts/scorecard.py docs/scorecard.csv results
-python scripts/triage_check.py docs/triage_userland.csv results/packages.csv results
+python scripts/triage_kernel.py MANIFEST.sbom-cve-check.yocto.json CVELIST_DIR KERNEL_BUILD_DIR ROOTFS docs/triage_kernel.csv
+python scripts/triage_check.py docs/triage_userland.csv results/packages.csv results docs/triage_kernel.csv
 ```
 
 The 34 MB manifest and the 47 MB SPDX file are not in this repository. `results/totals.json` and `results/sbom_counts.json` record their file names, sizes and SHA-256 hashes.
