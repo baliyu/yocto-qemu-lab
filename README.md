@@ -15,7 +15,7 @@ Every number below comes from a script in `scripts/` run on the real files, and 
 | MCUboot SBOM (mine) | SPDX 2.3 tag-value, 2,511 bytes: 5 package entries (2 image entries and 3 components), 0 files, 7 relationships | results/sbom_counts.json |
 | CVE report | 36 packages scanned, 20 with database matches: 22,246 Patched, 145 Unpatched, 112 Ignored; 10 packages carry Unpatched matches, and `linux-yocto` holds 116 of the 145 | results/totals.json, results/packages.csv |
 | Userland triage | The 29 non-kernel Unpatched matches in 9 packages are triaged with a reason each: 4 affected, 20 not affected, 5 unknown. The 116 kernel matches are not triaged | docs/TRIAGE.md, docs/triage_userland.csv, results/triage_totals.json |
-| My predictions | 136 rows: 95 hit, 33 missed, 8 not scored; 74.2% of scored predictions came true against a mean stated chance of 73.4% (120 rows with a stated chance) | results/scorecard_totals.json |
+| My predictions | 223 rows: 169 hit, 43 missed, 11 not scored; 79.7% of scored predictions came true against a mean stated chance of 74.2% (204 rows with a stated chance) | results/scorecard_totals.json |
 
 Figures: `results/fig_unpatched_by_package.png`, `results/fig_sbom_scale.png`, `results/fig_calibration.png`.
 
@@ -23,7 +23,7 @@ The two SBOMs are not like for like, and the comparison says why: [docs/COMPARIS
 
 ## What went wrong, and is kept
 
-The build was killed by a laptop restart at task 3875 of 4349 and left six zero-byte object files, which failed the final link of `gcc`. `runqemu` refused the setup's machine fragment, then the compressed image, and then the first root login. Each cause and fix is in [docs/SETUP.md](docs/SETUP.md). 33 of my predictions missed, and every miss has a note in [docs/scorecard.csv](docs/scorecard.csv).
+The build was killed by a laptop restart at task 3875 of 4349 and left six zero-byte object files, which failed the final link of `gcc`. `runqemu` refused the setup's machine fragment, then the compressed image, and then the first root login. Each cause and fix is in [docs/SETUP.md](docs/SETUP.md). 43 of my predictions missed, and every miss has a note in [docs/scorecard.csv](docs/scorecard.csv).
 
 ## Limits
 
